@@ -1,0 +1,68 @@
+import random
+
+def hangman():
+    words = [
+        "python",
+        "computer",
+        "laptop",
+        "keyboard",
+        "elephant",
+        "programming",
+        "developer",
+        "internet",
+        "monitor",
+        "software"
+    ]
+
+    secret_word = random.choice(words)
+    guessed_letters = []
+    attempts = 6
+
+    print("=" * 40)
+    print("         HANGMAN GAME")
+    print("=" * 40)
+    print("Guess the hidden word one letter at a time.\n")
+
+    while attempts > 0:
+        display_word = ""
+
+        for letter in secret_word:
+            if letter in guessed_letters:
+                display_word += letter + " "
+            else:
+                display_word += "_ "
+
+        print("\nWord:", display_word)
+        print("Guessed Letters:", " ".join(guessed_letters))
+        print("Attempts Left:", attempts)
+
+        if "_" not in display_word:
+            print("\n🎉 Congratulations! You guessed the word correctly!")
+            break
+
+        guess = input("\nEnter a letter: ").lower().strip()
+
+        if len(guess) != 1 or not guess.isalpha():
+            print("❌ Please enter only one alphabet.")
+            continue
+
+        if guess in guessed_letters:
+            print("⚠️ You already guessed that letter.")
+            continue
+
+        guessed_letters.append(guess)
+
+        if guess in secret_word:
+            print("✅ Correct Guess!")
+        else:
+            attempts -= 1
+            print("❌ Wrong Guess!")
+
+    if attempts == 0:
+        print("\n💀 Game Over!")
+        print(f"The correct word was: {secret_word}")
+
+    print("\nThanks for playing Hangman!")
+
+if __name__ == "__main__":
+    hangman()
